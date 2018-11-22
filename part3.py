@@ -1,8 +1,4 @@
-
 # coding: utf-8
-
-# In[96]:
-
 
 from part2 import * 
 from preprocess import *
@@ -33,6 +29,26 @@ def get_words(train):
 
     return diff_words, word_dict
 
+# function that gets different sentiments (tags) from a data set
+def get_tags(data):
+    
+    tags = {}
+    Y = get_counts(data)[0] 
+    
+    len_tweet = 0
+    for sent in range(len(Y.keys())):
+        if (list(Y.keys())[sent] != 'start') and (list(Y.keys())[sent] != 'stop'):
+            tags[list(Y.keys())[sent]] = sent+1
+            len_tweet += 1
+        else:
+            pass
+    
+    tags['stop'] = len_tweet + 1
+    tags['start'] = 0
+    
+    return tags
+    
+    
 
 # function that converts emission dictionary into emission matrix
 def em_matrix(emissions, diff_words, sents={}):
@@ -72,8 +88,8 @@ def mod_test (ptest):
     test = copy.deepcopy(ptest)
     # inserting start and stop nodes
     for tweet in test:
-        tweet.insert(0, 'start')
-        tweet.append('stop')
+        tweet.insert(0, '////')
+        tweet.append('\\\\')
         
     return test
 
@@ -141,44 +157,34 @@ def viterbi_algo (em_mat, trans_mat,
 if __name__ == '__main__':
     outfile = '/dev.p3.out'
     
-    # defining sentiments and associated indices
-    sents_SG = { 'start':0, 'O': 1, 'B-positive': 2, 'B-negative': 3, 'B-neutral':4, 'I-positive': 5, 'I-negative': 6, 'I-neutral':7, 'stop':8 }
-    sents_EN = {'start':0, 'O':1, 'B_VP':2, 'B_NP':3, 'B_PP':4, 'I_VP':5, 'I_NP':6, 'I_PP':7, 'stop':8}
-    sents = [sents_SG, sents_EN] 
-    
-    train = data_from_file(languages[3] + '/train') # processed training set for some language
-    train = mod_train (train)
-    
-    Y = get_counts(train)[0] # dictionary of sentiments and their counts
-    diff_words = get_words(train)[0] # array of unique words 
-    word_dict = get_words(train)[1] # dictionary of unique words and indices
-    
-    # getting emission and transmission matrices
-    emission_dict = get_emission(train) # dictionary with keys as (x, y) and values as emission probabilities
-    em_mat = em_matrix(emission_dict, diff_words, sents[0]) # emission matrix
-    trans_mat = transition_params(train, Y, sents[0]) # transition matrix
-    
-    
     # initializing dictionary where values are the nested list of optimal sentiments
     opt_sent_dict = {'EN':[], 'CN':[], 'FR':[], 'SG:':[]} 
     
-       
     # loop over languages
     for lang in languages:
         
-        # A list of list of tuples of size 1. Each list in test is a sentence. 
+        # reading tweets for particular language
+        ptrain = data_from_file(lang + '/train') # unmodified
+        train = mod_train (ptrain) # modified w/ start and stop states
+
+        # getting sentiments and associated indices (w/ start and stop)
+        sents = get_tags(ptrain) 
+        print (sents)
+
+        Y = get_counts(train)[0] # dictionary of sentiments and their counts
+        diff_words = get_words(train)[0] # array of unique words 
+        word_dict = get_words(train)[1] # dictionary of unique words and indices
+
+        # emission and transmission parameter matrices
+        emission_dict = get_emission(train) # dictionary with keys as (x, y) and values as emission probabilities
+        em_mat = em_matrix(emission_dict, diff_words, sents) # emission matrix
+        trans_mat = transition_params(train, Y, sents) # transition matrix
+        
+        # A list of list of tuples of size 1. Each list in test is a tweet. 
         ptest = data_from_file(lang + '/dev.in')
         # test is a list of list. Each sublist is an array of words, 1 tweet
         ptest = [[word[0] for word in line] for line in ptest]
-        print (ptest[0])
-        test = mod_test(ptest)
-        print (ptest[0])
-        
-        # choosing appropriate sentiment dictionary for each language
-        if (lang == 'SG' or lang == 'CN' or lang == 'FR'):
-            sent_type = 0
-        elif (lang == 'EN'):
-            sent_type = 1
+        test = mod_test(ptest) # modified with start and stop words
         
         # initializing list of optimal sentiment lists corresponding to each tweet 
         optimal_sentiments = []
@@ -187,18 +193,14 @@ if __name__ == '__main__':
         # loop that runs over all tweets for a given language to predict optimal sentiments
         for tweet in range(len(test)):
             
-            base_scores = np.ones([len(sents[sent_type].keys()),1]) # initializing base case scores
+            base_scores = np.ones([len(sents.keys()),1]) # initializing base case scores
             opt_ind_list = viterbi_algo (em_mat, trans_mat, word_dict, test[tweet], base_scores, 1, []) # running Viterbi
             
             # generating list of optimal sentiments for a given sentence
-            inv_sents = dict (zip(sents[0].values(), sents[sent_type].keys())) # swapping keys and values
+            inv_sents = dict (zip(sents.values(), sents.keys())) # swapping keys and values
             opt_sents = [inv_sents[opt_ind_list[i]] for i in range(len(opt_ind_list))]
 
             optimal_sentiments.append(opt_sents) # populating parent optimal sentiment list
-            
-            # clearing all previous lists
-            inv_sents = {}
-            opt_sents = []
             
             # printing iteration checks
             if (tweet % 100 == 0):
@@ -216,31 +218,4 @@ if __name__ == '__main__':
     print ('============================ Predictions Complete ============================')
 
 
-# In[98]:
-
-
-lang = 'SG'
-ptest = data_from_file(lang + '/dev.in')
-ptest = [[word[0] for word in line] for line in ptest]
-test = mod_test(ptest)
-
-test_ind = 0
-
-print ('length of tweet: ', len(test[test_ind]))
-print ('tweet: ', test[test_ind])
-print ('tweet: ', ptest[test_ind])
-print ()
-
-print ('length of tweet: ', len(opt_sent_dict[lang][test_ind]))
-print ('optimal sentiments: ', opt_sent_dict[lang][test_ind])
-
-# print (len(train[1]))
-# print (train[1])
-
-
-# pred = get_entities(open(lang+outfile, encoding='utf-8'))
-# gold = get_entities(open(lang+'/dev.out', encoding='utf-8'))
-# print(lang)
-# compare_result(gold, pred)
-# print()
 
