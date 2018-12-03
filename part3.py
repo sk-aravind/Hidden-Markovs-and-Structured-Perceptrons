@@ -11,12 +11,13 @@ import numpy as np
 if __name__ == '__main__':
     outfile = '/dev.p3.out'
     
-    # initializing dictionary where values are the nested list of optimal sentiments
-    opt_sent_dict = {'EN':[], 'CN':[], 'FR':[], 'SG:':[]} 
     
     # loop over languages
     for lang in languages:
         
+        
+        print ('============================',lang , '============================')
+        # ====================================== training ======================================
         # reading tweets for particular language
         ptrain = data_from_file(lang + '/train') # unmodified
         train = mod_train (ptrain) # modified w/ start and stop states
@@ -30,21 +31,25 @@ if __name__ == '__main__':
         word_dict = get_words(train)[1] # dictionary of unique words and indices
 
         # emission and transmission parameter matrices
-        emission_dict = get_emission(train) # dictionary with keys as (x, y) and values as emission probabilities
+        emission_dict = get_emission2(train, 1) # dictionary with keys as (x, y) and values as emission probabilities
         em_mat = em_matrix(emission_dict, diff_words, sents) # emission matrix
         trans_mat = transition_params(train, Y, sents) # transition matrix
-#         print (trans_mat)
+        # ======================================================================================
         
+        
+        # ========================================= validation set =========================================
         # A list of list of tuples of size 1. Each list in test is a tweet. 
         ptest = data_from_file(lang + '/dev.in')
         # test is a list of list. Each sublist is an array of words, 1 tweet
         ptest = [[word[0] for word in line] for line in ptest]
         test = mod_test(ptest) # modified with start and stop words
+        # ==================================================================================================
         
+        
+        # ============================================ getting predictions ============================================
         # initializing list of optimal sentiment lists corresponding to each tweet 
         optimal_sentiments = []
         
-        print ('============================',lang , '============================')
         # loop that runs over all tweets for a given language to predict optimal sentiments
         for tweet in range(len(test)):
             
@@ -61,14 +66,12 @@ if __name__ == '__main__':
             if (tweet % 100 == 0):
                 print (tweet, ' out of ', len(test), ' tweets have been predicted.')
         
-        opt_sent_dict[lang] = optimal_sentiments # populating optimal sentiment dictionary 
-        
         predictions = []
         for tweet in range(len(optimal_sentiments)):
             predictions.append([(ptest[tweet][i], optimal_sentiments[tweet][i]) for i in range(len(optimal_sentiments[tweet]))])
         
         write_predictions(predictions, lang, outfile)
-        
+        # =============================================================================================================
     
     print ('============================ Predictions Complete ============================')
     

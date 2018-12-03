@@ -113,20 +113,19 @@ def transition_params(train, Y, sents):
     return q_uv
 
 
-# In[97]:
 
 
 
 # function that runs the viterbi algorithm recursively 
-def viterbi_algo (em_mat, trans_mat, 
-                  word_dict, line, prev_scores, 
-                  loop_ind=1, ind_list=[]):
     # emissions: matrix of emission parameters
     # transitions: matrix of transition parameters
     # word_dict: dictionary of words with associated indices
     # line: line of words (tweet)
     # prev_col: scores of previous column 
     # loop_ind: current loop iteration
+def viterbi_algo (em_mat, trans_mat, 
+                  word_dict, line, prev_scores, 
+                  loop_ind=1, ind_list=[]):
 
     word_ind = word_dict[line[loop_ind][0]] # associated index of current word
     emissions = em_mat[:, word_ind].reshape((len(trans_mat[0]),1)) 
@@ -136,13 +135,16 @@ def viterbi_algo (em_mat, trans_mat,
     # loop to fill current score column
     for row in range(len(prev_scores)):   
         current_scores[row, 0] = np.amax(scores[row,:])
-
+    scores = np.zeros([len(prev_scores), len(prev_scores)]) # resetting score matrix
+    
     # check statements to terminate recursion
     if loop_ind < len(line)-1:
-        
         loop_ind += 1 # setting next iterations index
         ind_list.append(np.argmax(current_scores)) # storing optimal path node indices  
         return viterbi_algo(em_mat, trans_mat, word_dict, line, current_scores, loop_ind, ind_list)
     
     else:
         return ind_list
+    
+    
+    
