@@ -1784,9 +1784,9 @@ préciser O
 au O
 RDC O
 ou O
-étage O
-pour O
-éviter O
+étage I-positive
+pour I-positive
+éviter I-positive
 des O
 surprises O
 . O
@@ -2278,7 +2278,7 @@ au O
 restaurant O
 pour O
 être O
-vu O
+vu I-positive
 c'est O
 l O
 ' O
@@ -3152,7 +3152,7 @@ une O
 table O
 qui O
 vous O
-permet O
+permet I-positive
 de O
 voir O
 travailler O
@@ -3689,7 +3689,7 @@ Menus I-positive
 prix I-positive
 raisonables I-positive
 et O
-très O
+très I-positive
 bonne I-positive
 cave O
 avec O

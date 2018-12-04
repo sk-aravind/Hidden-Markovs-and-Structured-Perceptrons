@@ -52,27 +52,22 @@ def get_tags (data):
     
 
 # function that converts emission dictionary into emission matrix
-def em_matrix (emissions, diff_words, sents={}):
     # emissions: dictionary of emission probs
-    # diff_words: diff_words: array of words arranged with associated indices
+    # word_dict: dictionary of different words
     # sents: dictionary of sentiments and associated indices
-
-    em_mat = np.zeros([len(sents.keys()), len(diff_words)]) # emission matrix
-    inv_sents = dict (zip(sents.values(),sents.keys())) # swapping keys and values
-
-    # populating emission matrix
-    for row in range(len(inv_sents.keys())):
-        for col in range(len(diff_words)):
-            if (diff_words[col], inv_sents[row]) in emissions.keys():
-                em_mat[row, col] = emissions[(diff_words[col], inv_sents[row])]
-            else:
-                pass
+def em_matrix (emissions, word_dict, sents={}):
     
-    # populating entries with base probabilities
-    for row in range(len(em_mat[:, 0])):
-        for col in range(len(em_mat[0, :])):
-            em_mat[row, col] = em_mat[row, col] if em_mat[row, col] != 0 \
-            else (row != 0 and row != len(em_mat[:, 0])-1) * 1e-30  
+    em_mat = np.zeros([len(sents.keys()), len(word_dict.keys())]) # init emission matrix
+    
+    # populating emission parameters
+    for tag in sents:
+        for word in word_dict:
+            em_mat[sents[tag], word_dict[word]] = emissions[(word, tag)] if emissions[(word, tag)] != 0 else 1e-30
+    
+    # ensuring zeros for emissions from start and stop nodes
+    for i in range(len(em_mat[0, :])):
+        em_mat[sents['start'], i] = (i == word_dict['~~~~|']) * 1.
+        em_mat[sents['stop'], i] = (i == word_dict['|~~~~']) * 1.
 
     return em_mat
 
@@ -84,8 +79,8 @@ def mod_train (ptrain):
     train = copy.deepcopy(ptrain)
     # inserting start and stop nodes
     for tweet in train:
-        tweet.insert(0, ('////','start'))
-        tweet.append(('\\\\', 'stop'))
+        tweet.insert(0, ('~~~~|','start'))
+        tweet.append(('|~~~~', 'stop'))
         
     return train
 
@@ -97,8 +92,8 @@ def mod_test (ptest):
     test = copy.deepcopy(ptest)
     # inserting start and stop nodes
     for tweet in test:
-        tweet.insert(0, '////')
-        tweet.append('\\\\')
+        tweet.insert(0, '~~~~|')
+        tweet.append('|~~~~')
         
     return test
 
@@ -112,7 +107,7 @@ def transition_params (train, Y, sents):
     # Y: dictionary with sentiment and counts
     # sents: dictionary with sentiments and associated indices
 
-    q_uv = np.zeros([len(Y.keys()), len(Y.keys())]) # 2D array transitions
+    q_uv = np.ones([len(sents.keys()), len(sents.keys())]) * 1e-30 # 2D array transitions
     
     # counting u,v transitions for all u,v
     for tweet in range(len(train)):
@@ -125,11 +120,10 @@ def transition_params (train, Y, sents):
             # filling up transition matrix
             q_uv[label_i, label_im1] += 1/Y[train[tweet][y-1][1]]
     
-    # populating entries with base probabilities
-    for row in range(len(q_uv[:, 0])):
-        for col in range(len(q_uv[0, :])):
-            q_uv[row, col] = q_uv[row, col] if q_uv[row, col] != 0 \
-            else (row != 0 and col != len(q_uv[0, :])-1) * 1e-30 
+    # setting all transitions to start and from stop to 0
+    for i in range(len(q_uv[:, 0])):
+        q_uv[sents['start'], i] = 0.
+        q_uv[i, sents['stop']] = 0. 
 
     return q_uv
 
@@ -144,29 +138,56 @@ def transition_params (train, Y, sents):
     # line: line of words (tweet)
     # prev_col: scores of previous column 
     # loop_ind: current loop iteration
-    # edge: default index for edge cases
 def viterbi_algo (em_mat, trans_mat, 
                   word_dict, line, prev_scores, 
-                  loop_ind=1, ind_list=[], edge=1):
-    
-    # associated index of current word (checks if word in training set, else #UNK#)
-    word_ind = word_dict[line[loop_ind][0]] if line[loop_ind][0] in word_dict else word_dict['#UNK#']
-    
-    emissions = em_mat[:, word_ind].reshape((len(trans_mat[0]),1)) # column of emission matrix
-    scores = emissions*trans_mat*np.transpose(prev_scores) # matrix of all scores 
-    
-    # populating current score column
-    current_scores = np.zeros([len(prev_scores), 1]) # init current word layer 
-    for row in range(len(prev_scores)): # mult by 100 to prevent underflow
-        current_scores[row, 0] = np.amax(scores[row,:]) * 1e+3
+                  loop_ind=1, ind_list=[]):
     
     # check statements to terminate recursion
     if loop_ind < len(line)-1:
-        loop_ind += 1 # setting next iterations index
-        ind_list.append(np.argmax(current_scores[1:len(current_scores[:,0])-1, 0]) + 1)
-        return viterbi_algo(em_mat, trans_mat, word_dict, line, current_scores, loop_ind, ind_list, edge)
+        
+        # associated index of current word (checks if word in training set, else #UNK#)
+        word_ind = word_dict[line[loop_ind][0]] if line[loop_ind][0] in word_dict else word_dict['#UNK#']
+
+        # populating current score column
+        emissions = em_mat[:, word_ind].reshape([len(em_mat[:, 0]),1]) # column of emission matrix
+        scores = emissions*trans_mat*np.transpose(prev_scores) # matrix of all possible scores 
+        current_scores = np.asarray([np.amax(scores[row,:]) * 1e+3 for row in range(len(prev_scores))]).reshape([len(prev_scores[:,0]), 1])
+    
+        # appending optimal scores to list
+        ind_list.append(np.argmax(current_scores[1:len(current_scores[:,0])-1,0]) + 1)
+        
+        return viterbi_algo(em_mat, trans_mat, word_dict, line, current_scores, loop_ind + 1, ind_list)
     
     else:
         return ind_list
     
+    
+    
+    
+
+# function that generates emission and transmission matrices, sentiment and word dictionaries
+    # lang: language string (e.g. 'EN')
+def train_params (lang):
+    
+    # reading tweets for particular language
+    ptrain = data_from_file(lang + '/train') # unmodified
+    train = mod_train (ptrain) # modified w/ start and stop states
+
+    sents = get_tags(ptrain) # getting sentiments and associated indices (w/ start and stop)
+    Y = get_counts(train)[0] # dictionary of sentiments and their counts
+    diff_words = get_words(train)[0] # array of unique words 
+    word_dict = get_words(train)[1] # dictionary of unique words and indices
+
+    # emission and transmission parameter matrices
+    emission_dict = get_emission2(train, 2) # dictionary with keys as (x, y) and values as emission probabilities
+    em_mat = em_matrix(emission_dict, word_dict, sents) # emission matrix
+    trans_mat = transition_params(train, Y, sents) # transition matrix
+    
+    return em_mat, trans_mat, sents, word_dict
+        
+        
+        
+        
+        
+        
     
