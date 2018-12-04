@@ -5,6 +5,9 @@ from part3_fun import *
 from preprocess import *
 from collections import defaultdict
 import numpy as np
+import time
+
+
     
 
 # main code block
@@ -31,8 +34,10 @@ if __name__ == '__main__':
         word_dict = get_words(train)[1] # dictionary of unique words and indices
 
         # emission and transmission parameter matrices
-        emission_dict = get_emission2(train, 1) # dictionary with keys as (x, y) and values as emission probabilities
+        emission_dict = get_emission2(train, 3) # dictionary with keys as (x, y) and values as emission probabilities
         em_mat = em_matrix(emission_dict, diff_words, sents) # emission matrix
+        
+        # print (em_mat[:,em_mat.shape[1]-1])
         trans_mat = transition_params(train, Y, sents) # transition matrix
         # ======================================================================================
         
@@ -45,7 +50,7 @@ if __name__ == '__main__':
         test = mod_test(ptest) # modified with start and stop words
         # ==================================================================================================
         
-        
+        start = time.time()
         # ============================================ getting predictions ============================================
         # initializing list of optimal sentiment lists corresponding to each tweet 
         optimal_sentiments = []
@@ -53,8 +58,9 @@ if __name__ == '__main__':
         # loop that runs over all tweets for a given language to predict optimal sentiments
         for tweet in range(len(test)):
             
+            # running Viterbi algorithm
             base_scores = np.ones([len(sents.keys()),1]) # initializing base case scores
-            opt_ind_list = viterbi_algo (em_mat, trans_mat, word_dict, test[tweet], base_scores, 1, []) # running Viterbi
+            opt_ind_list = viterbi_algo (em_mat, trans_mat, word_dict, test[tweet], base_scores, 1, [], sents['O']) 
             
             # generating list of optimal sentiments for a given sentence
             inv_sents = dict (zip(sents.values(), sents.keys())) # swapping keys and values
@@ -70,8 +76,10 @@ if __name__ == '__main__':
         for tweet in range(len(optimal_sentiments)):
             predictions.append([(ptest[tweet][i], optimal_sentiments[tweet][i]) for i in range(len(optimal_sentiments[tweet]))])
         
-        write_predictions(predictions, lang, outfile)
+        write_predictions(predictions, lang, outfile) # writing predictions to outfile
         # =============================================================================================================
+        end = time.time()
+        print('time to run the Viterbi algorithm for', lang, ': ', end - start)
     
     print ('============================ Predictions Complete ============================')
     

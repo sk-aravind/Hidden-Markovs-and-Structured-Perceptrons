@@ -119,6 +119,8 @@ def transition_params2(train, YY, sents, sent_pairs):
 
     return q2_uv
 
+
+
 # function that modifies transition matrix so that zero entries are epsilon instead
     # trans_mat: unmodified transition matrix
 def mod_trans2 (trans_mat):
@@ -130,6 +132,7 @@ def mod_trans2 (trans_mat):
             else:
                 pass
     return trans_mat
+
 
 # function that runs the 2nd order viterbi algorithm recursively 
 # arguments:

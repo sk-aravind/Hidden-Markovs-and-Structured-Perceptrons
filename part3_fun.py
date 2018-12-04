@@ -6,7 +6,7 @@ import copy
 
 # function that collates a sorted list of different words, 
 # and a dictionary of words as keys and associated indices as values 
-def get_words(train):
+def get_words (train):
     # train: training data 
 
     all_words = [] # list of all words in train data
@@ -16,9 +16,11 @@ def get_words(train):
         for word in range(len(train[tweet])):
             all_words.append(train[tweet][word][0]) # list of all words in data
 
-
     diff_words = np.unique(all_words) # array of unique words
-
+    diff_words = diff_words.tolist() # converting to list
+    diff_words.append('#UNK#') # appending #UNK#
+    diff_words = np.asarray(diff_words) # converting back to array
+    
     # generating dictionary of words as keys and associated indices as values 
     word_dict = defaultdict(int)
     for i in range(len(diff_words)):
@@ -26,8 +28,10 @@ def get_words(train):
 
     return diff_words, word_dict
 
+
+
 # function that gets different sentiments (tags) from a data set
-def get_tags(data):
+def get_tags (data):
     
     tags = {}
     Y = get_counts(data)[0] 
@@ -48,7 +52,7 @@ def get_tags(data):
     
 
 # function that converts emission dictionary into emission matrix
-def em_matrix(emissions, diff_words, sents={}):
+def em_matrix (emissions, diff_words, sents={}):
     # emissions: dictionary of emission probs
     # diff_words: diff_words: array of words arranged with associated indices
     # sents: dictionary of sentiments and associated indices
@@ -63,8 +67,15 @@ def em_matrix(emissions, diff_words, sents={}):
                 em_mat[row, col] = emissions[(diff_words[col], inv_sents[row])]
             else:
                 pass
+    
+    # populating entries with base probabilities
+    for row in range(len(em_mat[:, 0])):
+        for col in range(len(em_mat[0, :])):
+            em_mat[row, col] = em_mat[row, col] if em_mat[row, col] != 0 \
+            else (row != 0 and row != len(em_mat[:, 0])-1) * 1e-30  
 
     return em_mat
+
 
 
 # function that adds start and stop nodes to training set
@@ -79,6 +90,7 @@ def mod_train (ptrain):
     return train
 
 
+
 # function that adds start and stop nodes to validation set
 def mod_test (ptest):
     
@@ -91,8 +103,11 @@ def mod_test (ptest):
     return test
 
 
+
+
+
 # function that computes transition parameter matrix
-def transition_params(train, Y, sents):
+def transition_params (train, Y, sents):
     # train: processed training set of features and labels
     # Y: dictionary with sentiment and counts
     # sents: dictionary with sentiments and associated indices
@@ -109,6 +124,12 @@ def transition_params(train, Y, sents):
 
             # filling up transition matrix
             q_uv[label_i, label_im1] += 1/Y[train[tweet][y-1][1]]
+    
+    # populating entries with base probabilities
+    for row in range(len(q_uv[:, 0])):
+        for col in range(len(q_uv[0, :])):
+            q_uv[row, col] = q_uv[row, col] if q_uv[row, col] != 0 \
+            else (row != 0 and col != len(q_uv[0, :])-1) * 1e-30 
 
     return q_uv
 
@@ -123,28 +144,29 @@ def transition_params(train, Y, sents):
     # line: line of words (tweet)
     # prev_col: scores of previous column 
     # loop_ind: current loop iteration
+    # edge: default index for edge cases
 def viterbi_algo (em_mat, trans_mat, 
                   word_dict, line, prev_scores, 
-                  loop_ind=1, ind_list=[]):
-
-    word_ind = word_dict[line[loop_ind][0]] # associated index of current word
-    emissions = em_mat[:, word_ind].reshape((len(trans_mat[0]),1)) 
+                  loop_ind=1, ind_list=[], edge=1):
+    
+    # associated index of current word (checks if word in training set, else #UNK#)
+    word_ind = word_dict[line[loop_ind][0]] if line[loop_ind][0] in word_dict else word_dict['#UNK#']
+    
+    emissions = em_mat[:, word_ind].reshape((len(trans_mat[0]),1)) # column of emission matrix
     scores = emissions*trans_mat*np.transpose(prev_scores) # matrix of all scores 
     
+    # populating current score column
     current_scores = np.zeros([len(prev_scores), 1]) # init current word layer 
-    # loop to fill current score column
-    for row in range(len(prev_scores)):   
-        current_scores[row, 0] = np.amax(scores[row,:])
-    scores = np.zeros([len(prev_scores), len(prev_scores)]) # resetting score matrix
+    for row in range(len(prev_scores)): # mult by 100 to prevent underflow
+        current_scores[row, 0] = np.amax(scores[row,:]) * 1e+3
     
     # check statements to terminate recursion
     if loop_ind < len(line)-1:
         loop_ind += 1 # setting next iterations index
-        ind_list.append(np.argmax(current_scores)) # storing optimal path node indices  
-        return viterbi_algo(em_mat, trans_mat, word_dict, line, current_scores, loop_ind, ind_list)
+        ind_list.append(np.argmax(current_scores[1:len(current_scores[:,0])-1, 0]) + 1)
+        return viterbi_algo(em_mat, trans_mat, word_dict, line, current_scores, loop_ind, ind_list, edge)
     
     else:
         return ind_list
-    
     
     
