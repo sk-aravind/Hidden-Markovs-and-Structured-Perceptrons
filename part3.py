@@ -3,7 +3,6 @@
 from preprocess import *
 from part2 import * 
 from part3_fun import *
-from check_fun import *
 from collections import defaultdict
 import numpy as np
 import time

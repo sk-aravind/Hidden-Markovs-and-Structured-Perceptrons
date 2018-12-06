@@ -2,7 +2,7 @@
 
 # part 4 of ML project
 from part4_fun import *
-from check_fun import *
+import time
 
 
 # main code block
@@ -26,21 +26,22 @@ if __name__ == '__main__':
         test = mod_test2(ptest) # modified with start and stop words
         # ========================================================================================
         
+        start = time.time()
         # ==================================== getting predictions ====================================
         optimal_tags = [] # init list of optimal tag lists corresponding to each tweet 
         
         # loop that runs over all tweets for a given language to predict optimal sentiments
         for tweet in test:
             optimal_tags.append(Viterbi2 (a, b, tags, words, tweet))
-            print (tweet)
         
         predictions = [] # init list of predictions
         for tweet in range(len(optimal_tags)):
             predictions.append([(ptest[tweet][i], optimal_tags[tweet][i]) for i in range(len(optimal_tags[tweet]))])
         
-        # write_predictions(predictions, lang, outfile) # writing results to outfile
+        write_predictions(predictions, lang, outfile) # writing results to outfile
         # =============================================================================================
-        
+        end = time.time()
+        print('time to get predictions for', lang, ': ', end - start)
     
     print ('============================ Predictions Complete ============================')
 
