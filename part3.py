@@ -20,7 +20,8 @@ if __name__ == '__main__':
         
         print ('============================',lang , '============================')
         # ====================================== training ======================================
-        a, b, tags, words = train_phase (lang, 1.1)
+        k = 2
+        a, b, tags, words = train_phase (lang, k)
         # ======================================================================================
         print (tags)
         # ========================================= validation set =========================================
@@ -48,6 +49,12 @@ if __name__ == '__main__':
         # =============================================================================================================
         end = time.time()
         print('time to get predictions for', lang, ': ', end - start)
+        print ()
+        pred = get_entities(open(lang+outfile, encoding='utf-8'))
+        gold = get_entities(open(lang+'/dev.out', encoding='utf-8'))
+        print (lang)
+        compare_result(gold, pred)
+        print ()
     
     print ('============================ Predictions Complete ============================')
     

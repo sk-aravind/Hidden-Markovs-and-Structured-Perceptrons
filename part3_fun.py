@@ -1,6 +1,7 @@
 from part2 import * 
 from preprocess import *
 from collections import defaultdict
+from functools import lru_cache
 import numpy as np
 import copy    
 
@@ -32,7 +33,7 @@ def get_words (train):
 def get_tags (data):
     
     tags = defaultdict(int)
-    Y = get_counts(data)[0] 
+    Y = get_count_y(data) 
     
     len_tweet = 0
     for sent in Y:
@@ -93,35 +94,71 @@ def transition_dict (train, Y):
 
     
     
-# function that runs the viterbi algorithm for each tweet
-    # a: transition dictionary
-    # b: emission dictionary
-    # tags: dictionary of tags and indices
-    # words: dictionary of words
-    # tweet: tweet from data
-def Viterbi (a, b, tags, words, tweet):
- 
-    optimal_tags = [] # optimal tags for given tweet
+# # function that runs the viterbi algorithm for each tweet
+#     # a: transition dictionary
+#     # b: emission dictionary
+#     # tags: dictionary of tags and indices
+#     # words: dictionary of words
+#     # tweet: tweet from data
+# def Viterbi (a, b, tags, words, tweet):
     
-    pi = defaultdict(float) # initializing score dictionary
-    pi[(0, 'start')] = 1. # base case
+#     optimal_tags = [] # optimal tags for given tweet
     
-    for j in range(1,len(tweet)): # loop over all words in tweet
+#     pi = defaultdict(float) # initializing score dictionary
+#     pi[(0, 'start')] = 1. # base case
+    
+#     for j in range(1,len(tweet)): # loop over all words in tweet
         
-        u_opt, pi_j_max = ['O', 0.] # default tag and score
-        x_j = tweet[j] if tweet[j] in words else '#UNK#' # j-th word in tweet
+#         u_opt, pi_j_max = ['O', 0.] # default tag and score
+#         x_j = tweet[j] if tweet[j] in words else '#UNK#' # j-th word in tweet
 
-        for u in tags: # loop over all possible tags
+#         for u in tags: # loop over all possible tags
             
-            pi[(j, u)] = max([pi[(j-1, v)] * a[(v,u)] * b[(x_j, u)] for v in tags]) # max score finding
-            u_opt, pi_j_max = [u, pi[(j, u)]] if pi[(j, u)] > pi_j_max else [u_opt, pi_j_max] # updating opt tag for x_j
+#             pi[(j, u)] = max([pi[(j-1, v)] * a[(v,u)] * b[(x_j, u)] for v in tags]) # max score finding
+#             u_opt, pi_j_max = [u, pi[(j, u)]] \
+#                                 if pi[(j, u)] > pi_j_max \
+#                                 else [u_opt, pi_j_max] # updating opt tag for x_j
             
-        optimal_tags.append(u_opt) # appending optimal sentiments
-    
-    return optimal_tags[:-1]
+#         optimal_tags.append(u_opt) # appending optimal sentiments
+        
+#     return optimal_tags[:-1]
         
     
-    
+def Viterbi(a, em, words, possible_labels, sentence):
+
+#     @lru_cache(maxsize=128) # Cache all results for the current sentence
+    def pai(k, v):
+        word = sentence[k-1]
+        word = word if word in words else '#UNK#'
+
+        if k > 1:
+
+            # Return the maximum of pai(k-1, u) * transition(u -> v) * emission(word, v) for all u in possible_labels
+            # Multiply result by 100 to prevent underflow
+
+            return max([pai(k-1, u) * a[(u, v)] * em.get((word, v), 0)\
+                        for u in possible_labels]) * 100
+
+        elif k == 1:
+            return a[('STARTNOW', v)] * em.get((word, v), 0) * 100
+
+        else:
+            return 100
+
+    def backtrack(k, next_label):
+        probabilities = {label : pai(k, label) * a[(label, next_label)] for label in possible_labels}
+        return max(probabilities, key=lambda key: probabilities[key])   # Returns label with the highest probability
+
+    next_label = 'STOPNOW'
+    seq = []
+
+    for k in range(len(sentence), 0, -1):   # Start at the last word, loop backwards until k = 1
+        label = backtrack(k, next_label)
+        next_label = label  # Move to previous word
+        seq.append(label)
+
+    return seq[::-1]
+
 
 # function that generates emission and transmission dicts, sentiment and word dictionaries
     # lang: language string (e.g. 'EN')
@@ -133,9 +170,9 @@ def train_phase (lang, k):
     train = mod_train (ptrain) # modified w/ start and stop states
 
     sents = get_tags(ptrain) # getting sentiments and associated indices (w/ start and stop)
-    Y = get_counts(train)[0] # dictionary of sentiments and their counts
+    Y = get_count_y(train) # dictionary of sentiments and their counts
     word_dict = get_words(train)[1] # dictionary of unique words and indices
-
+    
     # emission and transmission parameter matrices
     em_dict = get_emission2 (train, k) # dictionary with keys as (x, y) and values as emission probabilities
     trans_dict = transition_dict (train, Y) # transition matrix

@@ -1,11 +1,11 @@
 NO B-INTJ
 Saints I-INTJ
-R I-NP
+R O
 . O
 Buch O
 might B-VP
 come B-VP
-back B-ADVP
+back O
 n O
 play O
 vs O
@@ -65,7 +65,7 @@ Id I-NP
 love B-VP
 to I-VP
 see I-VP
-IDWT I-VP
+IDWT B-NP
 live I-VP
 from B-PP
 CES B-NP
@@ -89,9 +89,9 @@ i B-NP
 wish B-VP
 i B-NP
 got B-VP
-paid B-NP
+paid I-VP
 to I-VP
-freak I-VP
+freak B-NP
 people O
 out O
 . O
@@ -250,8 +250,8 @@ you O
 ? O
 
 tomorrow B-NP
-no B-NP
-school I-NP
+no B-ADVP
+school B-NP
 for B-PP
 me B-NP
 but O
@@ -323,20 +323,20 @@ place O
 Think B-VP
 I'ma B-NP
 make I-VP
-@GrownWomanStuff I-VP
-have I-VP
+@GrownWomanStuff B-NP
+have B-VP
 a B-NP
 shoegasm I-NP
 today B-NP
-hahahaha O
+hahahaha I-NP
 
 even B-ADVP
 better I-ADVP
 than I-ADVP
 cocktail O
-friday B-NP
+friday I-NP
 ! O
-http://is.gd/ffDb9 O
+http://is.gd/ffDb9 B-NP
 
 I B-NP
 kept I-NP
@@ -379,7 +379,7 @@ I B-NP
 was B-VP
 at B-PP
 last B-NP
-night O
+night I-NP
 did O
 n't O
 have O
@@ -390,11 +390,11 @@ uggghh O
 
 @hime8644 O
 LOL B-INTJ
-theres I-INTJ
+theres O
 always B-ADVP
 some B-NP
 good I-NP
-vids I-NP
+vids I-ADJP
 I B-NP
 didnt O
 see O
@@ -436,7 +436,7 @@ nice O
 LADY O
 GAGA I-NP
 IS B-VP
-BETTER B-NP
+BETTER I-VP
 THE O
 5th O
 TIME O
@@ -447,7 +447,7 @@ BABY( O
 Pope B-NP
 says I-NP
 religion I-NP
-' I-NP
+' O
 marginalized': I-NP
 That B-NP
 's B-VP
@@ -485,8 +485,8 @@ this B-NP
 will B-VP
 be I-VP
 more B-ADJP
-lhs I-NP
-games I-NP
+lhs I-ADJP
+games O
 then O
 i O
 went O
@@ -530,11 +530,11 @@ fat O
 GigaOM O
 ] O
 DRM O
-FAIL I-NP
+FAIL O
 : O
 Five B-NP
 Broken I-NP
-Copy O
+Copy I-NP
 Protection O
 Schemes O
 : O
@@ -561,9 +561,9 @@ I B-NP
 remember B-VP
 when B-ADVP
 you B-NP
-all I-NP
+all B-NP
 were B-VP
-thiiis B-NP
+thiiis I-VP
 big I-NP
 , O
 you O
@@ -652,10 +652,10 @@ lineup I-NP
 for B-PP
 tonight B-NP
 . O
-Keppinger O
+Keppinger B-NP
 sits I-NP
 , O
-Downs O
+Downs B-NP
 plays I-NP
 2B O
 , O
@@ -852,7 +852,7 @@ too O
 @DJDROC O
 : O
 #beforeserato O
-djs I-NP
+djs O
 actually B-ADVP
 used O
 headphones O
@@ -875,14 +875,14 @@ haha O
 
 RT O
 @robmoysey O
-Eyeopener I-NP
+Eyeopener O
 vs I-NP
 . O
-Ryerson O
+Ryerson B-NP
 Quidditch I-NP
 team I-NP
 this B-NP
-Sunday O
+Sunday B-NP
 at O
 4 O
 p.m. O
@@ -906,7 +906,7 @@ a B-NP
 long I-NP
 week I-NP
 here B-ADVP
-too B-NP
+too B-ADVP
 . O
 Luckily O
 for O
@@ -962,8 +962,8 @@ http://dlvr.it/5RfHy O
 I B-NP
 just B-ADVP
 took B-VP
-" B-NP
-After B-PP
+" O
+After B-SBAR
 getting B-VP
 trampled O
 at O
@@ -997,7 +997,7 @@ a B-NP
 medical I-NP
 illustration I-NP
 job I-NP
-through O
+through B-PP
 a O
 friend O
 . O
@@ -1042,7 +1042,7 @@ on B-PP
 my B-NP
 computer I-NP
 , O
-it O
+it B-NP
 gives O
 me O
 days O
@@ -1126,7 +1126,7 @@ scared O
 #pow#pow#pow@Cowboy_Wingo O
 
 Gotta B-VP
-love I-VP
+love B-NP
 the B-NP
 bumper I-NP
 stickers I-NP
@@ -1188,7 +1188,7 @@ Rock I-NP
 to B-PP
 SECTION B-NP
 204 I-NP
-tonight O
+tonight B-NP
 !!!! O
 
 @christinamarks_ O
@@ -1210,12 +1210,12 @@ Tomorrow B-NP
 So O
 I B-NP
 'm B-VP
-currently B-NP
-looking B-VP
+currently I-VP
+looking I-VP
 at B-PP
 about I-PP
 5 B-NP
-years O
+years I-NP
 and O
 3 O
 months O
@@ -1240,7 +1240,7 @@ if B-SBAR
 you B-NP
 are B-VP
 happy I-NP
-it B-NP
+it O
 's O
 friday O
 . O
@@ -1302,7 +1302,7 @@ if B-SBAR
 you B-NP
 are B-VP
 happy I-NP
-that B-NP
+that I-NP
 today O
 is O
 FRIDAY O
@@ -1311,10 +1311,10 @@ FRIDAY O
 
 People O
 who B-NP
-tweet I-NP
+tweet B-VP
 to I-VP
 follow I-VP
-@GuyGirlTweets I-VP
+@GuyGirlTweets B-NP
 will B-VP
 get I-VP
 huge I-NP
@@ -1332,7 +1332,7 @@ do O
 ! O
 
 Was O
-hard B-NP
+hard I-ADJP
 work I-NP
 going I-VP
 to I-VP
@@ -1391,12 +1391,12 @@ RT O
 @DesignerDepot O
 : O
 Minimalist O
-Web I-NP
+Web O
 Design I-NP
 : O
 When B-ADVP
 Less B-NP
-is O
+is B-VP
 More O
 - O
 http://ow.ly/2FwyX O
@@ -1411,7 +1411,7 @@ on B-PP
 my B-NP
 facee I-NP
 ... O
-wild O
+wild B-NP
 night I-NP
 ! O
 
@@ -1481,7 +1481,7 @@ member I-NP
 for B-PP
 picspam B-NP
 . O
-Will O
+Will B-NP
 do O
 them O
 tomorrow O
@@ -1496,7 +1496,7 @@ I B-NP
 've B-VP
 been I-VP
 having I-VP
-soup I-VP
+soup B-NP
 all B-NP
 week I-NP
 , O

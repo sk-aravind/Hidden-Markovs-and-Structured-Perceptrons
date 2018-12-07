@@ -1,12 +1,12 @@
 Petite O
-salle O
+salle B-positive
 ambiance B-positive
 plage I-positive
 Oléronaise I-positive
 . O
 
 La O
-salle O
+salle B-positive
 est O
 jolie O
 et O
@@ -123,7 +123,7 @@ d'organisation O
 . O
 
 Le O
-restaurant O
+restaurant B-positive
 est O
 très O
 bien O
@@ -136,7 +136,7 @@ Coeur O
 . O
 
 En O
-dessert O
+dessert B-positive
 , O
 en O
 plus O
@@ -244,7 +244,7 @@ commande O
 quand O
 même O
 , O
-lasagnes B-positive
+lasagnes O
 pâteuses O
 , O
 avec O
@@ -288,7 +288,7 @@ banale O
 . O
 
 le O
-service B-negative
+service B-positive
 est O
 nickel O
 . O
@@ -408,7 +408,7 @@ bas O
 
 A O
 la O
-carte B-positive
+carte O
 , O
 plus O
 cher O
@@ -506,7 +506,7 @@ absolument O
 La O
 côte O
 de O
-veau B-negative
+veau I-negative
 aussi O
 . O
 
@@ -583,7 +583,7 @@ convenable O
 En O
 somme O
 un O
-Resto B-positive
+Resto O
 où O
 on O
 peut O
@@ -626,7 +626,7 @@ chaudement O
 ! O
 
 Le O
-dessert O
+dessert B-positive
 , O
 une O
 soupe O
@@ -792,7 +792,7 @@ de O
 choix O
 à O
 la O
-carte B-positive
+carte O
 , O
 mais O
 c'est O
@@ -817,7 +817,7 @@ encore O
 pour O
 avoir O
 ses O
-boissons B-negative
+boissons O
 . O
 
 Dessert B-negative
@@ -890,7 +890,7 @@ part O
 . O
 
 Ce O
-restaurant O
+restaurant B-positive
 sur O
 le O
 port B-positive
@@ -907,7 +907,7 @@ carte O
 . O
 
 Les O
-plats O
+plats B-positive
 sont O
 excellents O
 de O
@@ -940,7 +940,7 @@ ses O
 commandes O
 
 Ce O
-restaurant O
+restaurant B-positive
 est O
 idéalement O
 placé O
@@ -1171,7 +1171,7 @@ déçus O
 ! O
 
 Les O
-serveurs B-negative
+serveurs B-positive
 sont O
 très O
 souriants O
@@ -1250,7 +1250,7 @@ professionnel O
 . O
 
 Le O
-poisson O
+poisson B-negative
 , O
 un O
 peu O
@@ -1309,7 +1309,7 @@ Quant O
 à O
 la O
 salade O
-de O
+de I-negative
 fruit O
 acide O
 et O
@@ -1406,7 +1406,7 @@ chers O
 . O
 
 Le O
-service B-negative
+service B-positive
 y O
 est O
 parfait O
@@ -1729,11 +1729,11 @@ Dessert B-negative
 Chtiterolles O
 et O
 café O
-gourmand O
+gourmand I-positive
 . O
 
 Un O
-restaurant O
+restaurant B-positive
 a O
 l'ancienne O
 qui O
@@ -1748,7 +1748,7 @@ peu O
 élevé O
 à O
 la O
-carte B-positive
+carte O
 sauf O
 pour O
 la O
@@ -1803,7 +1803,7 @@ cuise O
 ! O
 
 Les O
-desserts O
+desserts B-positive
 sont O
 un O
 peu O
@@ -1927,7 +1927,7 @@ Panier O
 . O
 
 Les O
-plats O
+plats B-positive
 que O
 nous O
 avons O
@@ -1999,7 +1999,7 @@ le O
 couvercle O
 de O
 mon O
-burger B-positive
+burger B-negative
 pour O
 vérifier O
 et O
@@ -2047,7 +2047,7 @@ exceptionnelle O
 . O
 
 Le O
-dessert O
+dessert B-positive
 salade O
 fruit O
 , O
@@ -2139,7 +2139,7 @@ avons O
 signalé O
 au O
 responsable O
-de O
+de I-negative
 salle O
 , O
 il O
@@ -2357,7 +2357,7 @@ doigts O
 ... O
 
 Des O
-plats O
+plats B-positive
 au I-negative
 gout O
 infâme O
@@ -2442,7 +2442,7 @@ Colmar O
 . O
 
 Le O
-service B-negative
+service B-positive
 s'est O
 dégradé O
 . O
@@ -2494,7 +2494,7 @@ gastronomique O
 , O
 des O
 plat O
-de O
+de I-negative
 qualités O
 avec O
 plein O
@@ -2690,7 +2690,7 @@ La O
 choucroute O
 , O
 le O
-produit B-positive
+produit O
 phare O
 , O
 est O
@@ -3231,7 +3231,7 @@ emballé O
 . O
 
 Les O
-plats O
+plats B-positive
 arrivent O
 rapidement O
 . O
@@ -3285,8 +3285,8 @@ touristique O
 
 Le O
 plat O
-du O
-jour O
+du I-neutral
+jour I-neutral
 comme O
 son O
 nom O
@@ -3651,7 +3651,7 @@ goût O
 . O
 
 La O
-nourriture B-negative
+nourriture B-positive
 , O
 intolérable O
 ! O

@@ -28,9 +28,30 @@ def get_tags2(data):
     return tags
 
 
+# function that gets counts of tag pairs
+    # train: modified processed training set 
+    # tags2: dictionary of sentiments and indices
+def get_counts2(train, tags2):
+    # count occurence of y,y
+    count_yy = defaultdict(int)
+    
+    # getting the (y_i, y_{i+1}) counts
+    for line in train:
+        for obs_labeli in range(len(line)-1):
+            count_yy[(line[obs_labeli][1], line[obs_labeli+1][1])] += 1
+    
+    # ensuring all possible tag pairs are in the dictionary 
+    for pairs in range(len(tags2.keys())):
+        if list(tags2.keys())[pairs] not in list(count_yy.keys()):
+            count_yy[list(tags2.keys())[pairs]] = 0
+        else: 
+            pass
+        
+    return count_yy
+
 
 # function that adds start and stop nodes to training data set
-    # unmodified training data
+    # ptrain: unmodified training data
 def mod_train2 (ptrain):
     
     train = deepcopy(ptrain)
@@ -60,16 +81,14 @@ def mod_test2 (ptest):
 
 
 
-# function that computes transition parameters 
+# function that computes second order transition parameters 
     # train: processed training set of features and labels
     # YY: dictionary with tag pairs and counts
-    # sents: dictionary with sentiments and associated indices
-    # sent_pairs: dictionary with sentiment pairs and associated indices
 def transition_dict2 (train, YY):
     
-    a_uv = defaultdict(float)
+    a_uv = defaultdict(float) # lambda:1e-30 
     
-    # counting u,v transitions for all u,v
+    # counting (v0, v1), u transitions 
     for tweet in train:
         for y_i in range(2, len(tweet)):
             
@@ -80,8 +99,7 @@ def transition_dict2 (train, YY):
 
 
 
-
-# function that runs the viterbi algorithm for each tweet
+# function that runs the 2nd order viterbi algorithm for each tweet
     # a: transition dictionary
     # b: emission dictionary
     # tags: dictionary of tags and indices
@@ -101,7 +119,6 @@ def Viterbi2 (a, b, tags, words, tweet):
         x_jm1 = tweet[j-1] if tweet[j-1] in words else '#UNK#' # j-th word in tweet
         x_j = tweet[j] if tweet[j] in words else '#UNK#' # j-th word in tweet
         
-        
         for u in tags: # loop over all possible tags
             
             pi_ju = np.zeros([len(tags), len(tags)]) # matrix of possible scorings 
@@ -117,8 +134,41 @@ def Viterbi2 (a, b, tags, words, tweet):
     return optimal_tags[:-2]
 
 
+# an alternative implementation of the 2nd order viterbi algorithm 
+    # a: 2d order transition dictionary
+    # b: emission dictionary
+    # tags: dictionary of tags and indices
+    # words: dictionary of words
+    # tweet: tweet from data
+def Viterbi2_alt (a, b, tags, words, tweet):
+    
+    optimal_tags = [] # optimal tags for given tweet
+    
+    pi = defaultdict(float) # initializing score dictionary
+    pi[(0, 'start0')] = 1. # base case 0
+    pi[(1, 'start1')] = 1. # base case 1
+    
+    for j in range(2,len(tweet)): # loop over all words in tweet
+        
+        u_opt, pi_j_max = ['O', 0.] # default tag and score
+        x_jm1 = tweet[j-1] if tweet[j-1] in words else '#UNK#' # j-th word in tweet
+        x_j = tweet[j] if tweet[j] in words else '#UNK#' # j-th word in tweet
+        
+        
+        for u in tags: # loop over all possible tags
+            
+            pi[(j, u)] = max([pi[(j-1, v1)]*b[(x_jm1, v1)]*b[(x_j, u)]* \
+                              max([pi[(j-2, v0)]*a[((v0, v1), u)] for v0 in tags]) \
+                              for v1 in tags])
+            u_opt, pi_j_max = [u, pi[(j, u)]] if pi[(j, u)] > pi_j_max else [u_opt, pi_j_max] # updating opt tag for x_j
+            
+        optimal_tags.append(u_opt) # appending optimal sentiments
+    
+    return optimal_tags[:-2]
+    
+    
 
-# function that generates emission and transmission matrices, sentiment and word dictionaries
+# function that generates emission and transmission dicts, sentiment and word dictionaries
     # lang: language string (e.g. 'EN')
     # k: regulator for unseen words
 def train_phase2 (lang, k):
@@ -140,6 +190,25 @@ def train_phase2 (lang, k):
     return trans_dict, emission_dict, sents, word_dict
 
 
+# function that generates 2nd order emission and transmission dicts, tags and word dictionaries
+    # lang: language string (e.g. 'EN')
+    # k: regulator for unseen words
+def train_phase_2nd_order (lang, k):
+    
+    # reading tweets for particular language
+    ptrain = data_from_file(lang + '/train') # unmodified
+    train = mod_train2 (ptrain) # modified w/ start and stop states
 
+    # getting sentiments/sentiment pairs and associated indices (w/ start and stop)
+    tags2 = get_tags2 (ptrain) 
+    
+    YY = get_counts2(train, tags2) # dictionary of sentiments and their counts
+    word_dict = get_words(train)[1] # dictionary of unique words and indices
+
+    # emission and transmission parameter matrices
+    emission_dict = get_emission2 (train, k) # dictionary with keys as (x, y) and values as emission probabilities
+    trans_dict = transition_dict2 (train, YY) # 2nd order transition dictionary
+    
+    return trans_dict, emission_dict, tags2, word_dict
     
     
