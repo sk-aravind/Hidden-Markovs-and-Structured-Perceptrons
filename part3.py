@@ -12,7 +12,7 @@ import time
 
 # main code block
 outfile = '/dev.p3.out'
-# languages = ['EN', 'FR']
+languages = ['EN', 'FR']
 # loop over languages
 for lang in languages:
 
