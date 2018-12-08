@@ -39,7 +39,7 @@ resto O
 classe O
 , O
 une O
-cuisine O
+cuisine B-positive
 très O
 soignée O
 et O
@@ -56,7 +56,7 @@ occasion O
 , O
 c'est O
 le O
-lieu O
+lieu B-positive
 IDEAL O
 ! O
 
@@ -80,10 +80,10 @@ chips O
 erreur O
 fatale O
 : O
-burger O
+burger B-positive
 moyen O
 , O
-frites O
+frites B-negative
 molles O
 et O
 grasses O
@@ -98,7 +98,7 @@ d'ingurgiter O
 uniquement O
 de O
 la O
-pâte O
+pâte B-positive
 à O
 friture O
 baignée O
@@ -197,7 +197,7 @@ exceptionnel O
 ! O
 
 Superbe O
-cadre O
+cadre B-positive
 si O
 on O
 mange O
@@ -260,10 +260,10 @@ dessus O
 ce O
 qui O
 atténuait O
-l'acidité O
-du O
-concentré O
-de O
+l'acidité B-negative
+du I-negative
+concentré I-negative
+de I-negative
 tomates I-negative
 ... O
 ! O
@@ -399,7 +399,7 @@ autres O
 personnes O
 par O
 la O
-terrasse O
+terrasse B-positive
 et O
 les O
 prix O
@@ -483,7 +483,7 @@ que O
 les O
 clients O
 en O
-terrasse O
+terrasse B-positive
 le O
 voient O
 . O
@@ -504,8 +504,8 @@ absolument O
 . O
 
 La O
-côte O
-de O
+côte B-negative
+de I-negative
 veau I-negative
 aussi O
 . O
@@ -514,10 +514,10 @@ A O
 la O
 place O
 une O
-espèce O
-de O
-confit O
-de O
+espèce B-negative
+de I-negative
+confit I-negative
+de I-negative
 tomates I-negative
 au I-negative
 citron O
@@ -680,7 +680,7 @@ chose O
 a O
 changé O
 en O
-cuisine O
+cuisine B-positive
 par O
 rapport O
 à O
@@ -734,8 +734,8 @@ côté O
 a O
 renvoyé O
 son O
-verre O
-de O
+verre B-negative
+de I-negative
 vin I-negative
 blanc I-negative
 sous O
@@ -817,12 +817,12 @@ encore O
 pour O
 avoir O
 ses O
-boissons B-negative
+boissons O
 . O
 
 Dessert B-negative
 : O
-mousse O
+mousse B-negative
 aux I-negative
 2 O
 chocolats O
@@ -835,7 +835,7 @@ sucrée O
 . O
 
 Choix B-negative
-de I-negative
+de O
 dessert O
 quasi O
 inexistant O
@@ -854,7 +854,7 @@ liquide O
 , O
 l O
 ' O
-accueil O
+accueil B-positive
 pas O
 très O
 agréable O
@@ -999,7 +999,7 @@ oblige O
 d'où O
 une O
 certaine O
-attente O
+attente B-negative
 qui O
 reste O
 supportable O
@@ -1030,7 +1030,7 @@ seau O
 glace O
 pour O
 le O
-vin O
+vin B-positive
 blanc I-positive
 , O
 pas O
@@ -1088,7 +1088,7 @@ variée O
 , O
 bonne O
 carte B-positive
-de O
+de I-positive
 vins I-positive
 , O
 nous O
@@ -1207,9 +1207,9 @@ pas O
 étonné O
 de O
 la O
-qualité O
-du O
-plat O
+qualité B-neutral
+du I-neutral
+plat I-neutral
 du I-neutral
 jour I-neutral
 . O
@@ -1326,7 +1326,7 @@ l'orangina O
 ... O
 
 Menu B-positive
-du O
+du I-positive
 jour I-positive
 
 De O
@@ -1346,7 +1346,7 @@ ans O
 a O
 gagné O
 en O
-décoration O
+décoration B-positive
 autant O
 qu'elle O
 a O
@@ -1395,13 +1395,13 @@ l'escalier O
 ... O
 ) O
 , O
-viande O
+viande B-negative
 un O
 peu O
 trop O
 cuite O
 , O
-vins O
+vins B-positive
 chers O
 . O
 
@@ -1452,18 +1452,18 @@ salade O
 , O
 un O
 faux O
-filet O
+filet B-positive
 a O
 25eu O
 servis O
 qu'avec O
 des O
-frites O
+frites B-negative
 , O
 et O
 pas O
 une O
-viande O
+viande B-negative
 limousine O
 ! O
 ! O
@@ -1481,7 +1481,7 @@ personnel B-positive
 agréable O
 , O
 carte B-positive
-de O
+de I-positive
 vins I-positive
 conséquente I-positive
 mais O
@@ -1508,8 +1508,8 @@ avant O
 même O
 d'attendre O
 le O
-plat O
-principal O
+plat B-negative
+principal I-negative
 . O
 
 Nous O
@@ -1752,7 +1752,7 @@ carte B-positive
 sauf O
 pour O
 la O
-formule B-positive
+formule B-neutral
 du I-neutral
 jour I-neutral
 . O
@@ -1822,7 +1822,7 @@ fini O
 , O
 la O
 deuxième O
-viande O
+viande B-negative
 bleue O
 , O
 froide O
@@ -1896,14 +1896,14 @@ ajoute O
 à O
 cela O
 des O
-produits O
+produits B-positive
 frais O
 , O
 du O
 goûts O
 et O
 des O
-recettes O
+recettes B-positive
 originales O
 , O
 c'est O
@@ -1939,7 +1939,7 @@ copieux O
 
 Très O
 bel O
-endroit O
+endroit B-positive
 avec O
 vue O
 sur O
@@ -2125,7 +2125,7 @@ cailloux O
 dans O
 la O
 pizza B-negative
-de I-negative
+de O
 mon O
 ami O
 . O
@@ -2202,7 +2202,7 @@ Pour O
 bien O
 connaitre O
 la O
-cuisine O
+cuisine B-positive
 marocaine O
 ce O
 restaurant O
@@ -2216,7 +2216,7 @@ fait O
 honte O
 à O
 la O
-cuisine O
+cuisine B-positive
 locale O
 . O
 
@@ -2238,9 +2238,9 @@ d O
 attentes O
 minumum O
 aucun O
-service O
+service B-negative
 et O
-patronne O
+patronne B-negative
 execrable O
 ! O
 
@@ -2358,7 +2358,7 @@ doigts O
 
 Des O
 plats O
-au I-negative
+au O
 gout O
 infâme O
 réchauffés O
@@ -2423,7 +2423,7 @@ petite O
 Venise O
 avec O
 terrasse B-positive
-au I-positive
+au O
 bord O
 de O
 l'eau O
@@ -2452,7 +2452,7 @@ voit O
 que O
 l O
 ' O
-équipe O
+équipe B-positive
 prend O
 du O
 plaisir O
@@ -2460,7 +2460,7 @@ plaisir O
 travailler O
 dans O
 ce O
-lieu O
+lieu B-positive
 magique O
 . O
 
@@ -2519,10 +2519,10 @@ déçu O
 et O
 l O
 ' O
-accueil O
+accueil B-positive
 et O
 le O
-service O
+service B-negative
 sont O
 au O
 top O
@@ -2656,12 +2656,12 @@ avons O
 attirés O
 par O
 une O
-carte O
+carte B-positive
 mettant O
 en O
 valeur O
 des O
-produits O
+produits B-positive
 frais O
 et O
 le O
@@ -2828,7 +2828,7 @@ ensoleillée O
 le O
 dimanche O
 , O
-décor O
+décor B-positive
 plutôt O
 sympa O
 , O
@@ -2847,7 +2847,7 @@ voir O
 en O
 début O
 de O
-service O
+service B-negative
 , O
 nous O
 étions O
@@ -2862,7 +2862,7 @@ de O
 s'installer O
 à O
 sa O
-terrasse O
+terrasse B-positive
 , O
 alors O
 que O
@@ -2958,7 +2958,7 @@ mais O
 bon O
 , O
 un O
-lieu O
+lieu B-positive
 aussi O
 scandaleux O
 merite O
@@ -3097,7 +3097,7 @@ rien O
 avoir O
 , O
 la O
-patronne O
+patronne B-negative
 ny O
 connait O
 rien O
@@ -3159,7 +3159,7 @@ travailler O
 les O
 peintres O
 de O
-Montmartre B-positive
+Montmartre O
 
 Accueil B-negative
 moyen O
@@ -3284,8 +3284,8 @@ touristique O
 . O
 
 Le O
-plat O
-du O
+plat B-neutral
+du I-neutral
 jour I-neutral
 comme O
 son O
@@ -3387,7 +3387,7 @@ de O
 place O
 et O
 du O
-personnel O
+personnel B-positive
 . O
 
 Vraiment O
@@ -3417,7 +3417,7 @@ bonnes O
 heureusement O
 que O
 le O
-personnel O
+personnel B-positive
 est O
 sympathique O
 . O
@@ -3579,19 +3579,19 @@ ville O
 , O
 très O
 bonne O
-cuisine O
+cuisine B-positive
 , O
-grillades O
-au O
-feu O
-de O
+grillades B-positive
+au I-positive
+feu I-positive
+de I-positive
 bois O
 casiement O
 sous O
 nos O
 yeux O
 , O
-produits O
+produits B-positive
 de O
 qualité O
 et O
@@ -3686,7 +3686,7 @@ vite O
 
 Menus B-neutral
 à O
-prix I-neutral
+prix O
 raisonables O
 et O
 très O

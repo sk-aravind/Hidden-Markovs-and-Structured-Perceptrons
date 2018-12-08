@@ -169,7 +169,7 @@ def compare_result(observed, predicted):
     """Compare between gold data and prediction data."""
     total_observed = 0
     total_predicted = 0
-    correct = {'entities': 0, 'sentiment': 0}
+    correct = {'entities': 0, 'entity types': 0}
 
     for example in observed:
         observed_instance = observed[example]
@@ -188,12 +188,12 @@ def compare_result(observed, predicted):
                 if span_ne == ne:
                     correct['entities'] += 1
                     if span_sent == sent:
-                        correct['sentiment'] += 1
+                        correct['entity types'] += 1
 
     print('Entities in gold data : %d' % total_observed)
     print('Entities in prediction: %d' % total_predicted)
 
-    for t in ('entities', 'sentiment'):
+    for t in ('entities', 'entity types'):
         print()
         prec = correct[t] / total_predicted
         recl = correct[t] / total_observed
@@ -211,7 +211,7 @@ def compare_result2(observed, predicted):
     """Compare between gold data and prediction data."""
     total_observed = 0
     total_predicted = 0
-    correct = {'entities': 0, 'sentiment': 0}
+    correct = {'entities': 0, 'entity types': 0}
 
     for example in observed:
         observed_instance = observed[example]
@@ -230,10 +230,10 @@ def compare_result2(observed, predicted):
                 if span_ne == ne:
                     correct['entities'] += 1
                     if span_sent == sent:
-                        correct['sentiment'] += 1
+                        correct['entity types'] += 1
 
     fs = []
-    for t in ('entities', 'sentiment'):
+    for t in ('entities', 'entity types'):
         prec = correct[t] / total_predicted
         recl = correct[t] / total_observed
         try:

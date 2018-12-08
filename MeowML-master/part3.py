@@ -30,10 +30,11 @@ def q(train):
 # qn 2
 
 def viterbi(sentence, words, possible_labels, a, em):
-
+    
     @lru_cache(maxsize=128) # Cache all results for the current sentence
     def pai(k, v):
-        word = sentence[k-1]
+        word = sentence[k-1] 
+        
         word = word if word in words else '#UNK#'
 
         if k > 1:
@@ -66,12 +67,20 @@ def viterbi(sentence, words, possible_labels, a, em):
 
 def predict_viterbi_decode(test, trans, em):
     words, labels = tuple(set(i) for i in zip(*em.keys()))
+    
+#     prediction = []
+#     for line in test:
+#         curr_pred = list(zip(line, viterbi(line, words, labels, trans, em)))
+#         prediction.append(curr_pred)
+#         print (curr_pred)
+        
     prediction = [list(zip(line, viterbi(line, words, labels, trans, em))) for line in test]
     return prediction
 
 
 if __name__ == '__main__':
     outfile = '/dev.p3.out'
+    
     for lang in languages:
         # qn 1
         train = data_from_file(lang + '/train')

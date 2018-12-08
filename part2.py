@@ -35,7 +35,7 @@ def get_emission2(train, k):
             count_obs_label[obs_label] += 1
 
     for obs_label, count in count_obs_label.items():
-        if count_obs[obs_label[0]] < k:
+        if count_obs[obs_label[0]] <= k:
             emission[('#UNK#', obs_label[1])] += count
         else:
             emission[obs_label] += count
