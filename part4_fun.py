@@ -41,7 +41,7 @@ def get_counts2(train): # tags2
     # YY: dictionary with tag pairs and counts
 def transition_dict2 (train, YY):
     
-    a_v0v1u = defaultdict(lambda:1e-15) # defaultdict(float) # init dictionary 
+    a_v0v1u = defaultdict(float) # init dictionary defaultdict(lambda:1e-15) #
     
     # counting (v0, v1), u transitions 
     for tweet in train:
@@ -54,61 +54,46 @@ def transition_dict2 (train, YY):
 
     
     
-# # function that runs the viterbi algorithm for each tweet
-#     # a: 2nd order transition dictionary
-#     # b: emission dictionary
-#     # tags: dictionary of tags and indices
-#     # words: dictionary of words
-#     # tweet: tweet from data
+# function that runs the viterbi algorithm for each tweet
+    # a: 2nd order transition dictionary
+    # b: emission dictionary
+    # tags: dictionary of tags and indices
+    # words: dictionary of words
+    # tweet: tweet from data
 def Viterbi_2nd_order (a, b, tags, words, tweet):
     
-    pi = defaultdict(float)
-    pi[(-2, 'start0')] = 1.
-    pi[(-1, 'start1')] = 1.
-                
-    for j in range(len(tweet)): # loop over words in tweet
-        
+    pi = defaultdict(float) # init score dictionary 
+    
+    for j in range(len(tweet)): # loop over words in tweet, O(n) complexity
         x_j = tweet[j] if tweet[j] in words else '#UNK#' # word in tweet
         
-        for u in tags: # loop over possible tags
-            
+        for u in tags: # loop over possible tags, O(T) complexity
             if j == 0:
-                # pi[(j, u)] = a[(('start0', 'start1'), u)] * b[(x_j, 'start1', u)] # base case
                 pi[(j, u)] = a[(('start0', 'start1'), u)] * b[(x_j, u)] # base case
 
-            elif j > 0:
+            elif j > 0: 
                 pi[(j, u)] = max([pi[(j-1, v1)] * b[(x_j, u)] * \
                               max([a[((v0, v1), u)] for v0 in tags]) \
-                              for v1 in tags]) # finding max score for u
-                
-#                 pi[(j, u)] = max([pi[(j-1, v1)] * b[(x_j, v1, u)] * \
-#                               max([a[((v0, v1), u)] for v0 in tags]) \
-#                               for v1 in tags]) # finding max score for u            
+                              for v1 in tags]) # finding max score for u, O(T^2) complexity         
     
     # stop state scores
     n = len(tweet) # length of tweet
-    pi[(n, 'stop0')] = max([pi[(n-1, v1)] * \
-                              max([a[((v0, v1), 'stop0')] for v0 in tags]) \
-                              for v1 in tags]) 
+    pi[(n, 'stop0')] = max([pi[(n-1, v1)] * max([a[((v0, v1), 'stop0')] for v0 in tags]) for v1 in tags]) 
     pi[(n+1, 'stop1')] = pi[(n, 'stop0')] * max([a[((v0, 'stop0'), 'stop1')] for v0 in tags])
     
-    # function that runs each backtracking iteration
+    # function that runs each 2nd order backtracking iteration
     def backtrack (j, v1, u):
         scores = {v0: pi[(j-2, v0)] * a[((v0, v1), u)] for v0 in tags}
-        
-        # tag with the highest score
-        best_tag = max(scores, key=lambda key: scores[key]) if max(scores.values()) > 0 else 'O' 
+        best_tag = max(scores, key=lambda key: scores[key]) if max(scores.values()) > 0 else 'O' # tag with the highest score
         return best_tag 
 
     reverse_tags = [] # init list 
-    v1 = 'stop0' # setting stop0 for back tracking
-    u = 'stop1' # setting stop1 for back tracking
+    v1, u = 'stop0', 'stop1' # setting stop states for back tracking
     
-    # bactracking for Viterbi algorithm
+    # bactracking for 2nd order Viterbi algorithm
     for j in range(len(tweet)+1, 1, -1):
         v0 = backtrack(j, v1, u)
-        u = v1
-        v1 = v0  # moving to previous word
+        u, v1 = v1, v0 # moving to previous word
         reverse_tags.append(v0)
 
     return reverse_tags[::-1]

@@ -45,28 +45,27 @@ def transition_dict (train, Y):
 #     # tweet: tweet from data
 def Viterbi(a, b, tags, words, tweet):
     
-    pi = defaultdict(float) # initi dictionary
-    pi[(-1, 'start')] = 1. # base case
+    pi = defaultdict(float) # init dictionary
     
-    for j in range(len(tweet)): # loops over words in tweet
+    for j in range(len(tweet)): # loops over words in tweet, O(n) complexity
         x_j = tweet[j] if tweet[j] in words else '#UNK#' # word in tweet
         
-        for u in tags: # loops over possible tags
-            
+        for u in tags: # loops over possible tags, O(T) complexity
             if j == 0:
                 pi[(j, u)] = a[('start', u)] * b[(x_j, u)] # base case
 
             elif j > 0:
-                pi[(j, u)] = max([pi[(j-1, v)] * a[(v, u)] * b[(x_j, u)] for v in tags]) # finding max score for u 
+                pi[(j, u)] = max([pi[(j-1, v)] * a[(v, u)] * b[(x_j, u)] \
+                                  for v in tags]) # finding max score for u, O(T) complexity
     
-    pi[(len(tweet), 'stop')] = max([pi[len(tweet)-1, v] * a[(v, 'stop')] for v in tags]) # stop state score
+    n = len(tweet) # length of tweet
+    pi[(n, 'stop')] = max([pi[n-1, v] * a[(v, 'stop')] for v in tags]) # stop state score
     
     # function that runs each backtracking iteration
     def backtrack(j, u):
         scores = {v: pi[(j-1, v)] * a[(v, u)] for v in tags}
-        
-        # tag with the highest score
-        best_tag = max(scores, key=lambda key: scores[key]) if max(scores.values()) > 0 else 'O'
+        best_tag = max(scores, key=lambda key: scores[key]) \
+                    if max(scores.values()) > 0 else 'O' # tag with the highest score
         return best_tag
 
     reverse_tags = [] # init list 
