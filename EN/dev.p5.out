@@ -52,11 +52,11 @@ act B-ADJP
 fake I-ADJP
 today B-NP
 but O
-its O
-okay I-INTJ
-bcuz B-ADVP
+its B-NP
+okay B-INTJ
+bcuz I-INTJ
 i B-NP
-still B-ADVP
+still B-VP
 love B-NP
 you B-NP
 
@@ -65,7 +65,7 @@ Id I-CONJP
 love B-VP
 to I-VP
 see I-VP
-IDWT B-ADVP
+IDWT I-VP
 live B-ADJP
 from B-PP
 CES B-ADVP
@@ -82,8 +82,8 @@ ces I-PP
 myself B-NP
 . O
 
-@Team_Panic B-ADVP
-omg I-ADVP
+@Team_Panic B-INTJ
+omg I-INTJ
 , O
 i B-NP
 wish B-VP
@@ -122,10 +122,10 @@ lil I-NP
 brat B-PP
 . O
 
-Amazon B-PP
-U.K. B-ADJP
-Offering B-VP
-HTC B-VP
+Amazon B-ADJP
+U.K. I-ADJP
+Offering I-ADJP
+HTC I-ADJP
 Desire B-PP
 Z I-PP
 Unlocked I-PP
@@ -265,13 +265,13 @@ tomorrow O
 omg B-PRT
 :/ B-INTJ
 
-PREACH B-SBAR
+PREACH B-INTJ
 !! O
 RT O
 @DJRyan1der B-SBAR
 : O
 These B-NP
-ppl B-NP
+ppl I-NP
 do B-VP
 n't I-VP
 understand B-PRT
@@ -280,9 +280,9 @@ Monday I-NP
 and O
 I B-NP
 'm B-VP
-not O
-in O
-da O
+not I-VP
+in B-PP
+da B-NP
 mood I-NP
 to B-VP
 deal B-PRT
@@ -311,11 +311,11 @@ the B-NP
 tailgate I-NP
 tonight B-NP
 . O
-Nonetheless B-SBAR
+Nonetheless B-ADVP
 it B-NP
-smells B-PP
-fresh I-PP
-in I-PP
+smells B-ADVP
+fresh I-ADVP
+in B-PP
 this B-NP
 place I-NP
 . O
@@ -401,7 +401,7 @@ see I-VP
 before B-PP
 like B-PP
 this B-NP
-one B-NP
+one I-NP
 XD B-INTJ
 --- I-INTJ
 &gt; I-INTJ
@@ -456,8 +456,8 @@ he B-NP
 ca B-VP
 n't I-VP
 get I-VP
-a B-ADJP
-headline I-ADJP
+a B-NP
+headline B-ADJP
 printed I-ADJP
 anywhere I-ADJP
 , O
@@ -533,10 +533,10 @@ DRM B-ADVP
 FAIL I-ADVP
 : O
 Five B-NP
-Broken B-ADJP
-Copy I-ADJP
-Protection I-ADJP
-Schemes B-VP
+Broken B-PRT
+Copy B-ADVP
+Protection I-ADVP
+Schemes I-ADVP
 : O
 This B-NP
 week I-NP
@@ -552,10 +552,10 @@ scheme B-NP
 ... I-NP
 http://bit.ly/blWf0e B-PRT
 
-Friday O
+Friday B-NP
 Night B-INTJ
-Eats B-ADJP
-http://twitpic.com/2pdvtr I-ADJP
+Eats I-INTJ
+http://twitpic.com/2pdvtr I-INTJ
 
 I B-NP
 remember B-VP
@@ -620,7 +620,7 @@ A B-NP
 YEAR I-NP
 !!! O
 And O
-more B-ADJP
+more B-NP
 ... O
 http://nblo.gs/80qJu B-INTJ
 
@@ -639,10 +639,10 @@ A B-NP
 TRUE B-VP
 friend I-NP
 walks B-PP
-in B-ADJP
+in B-PP
 when O
-everybody B-ADJP
-else I-ADJP
+everybody B-INTJ
+else B-ADJP
 walks I-ADJP
 out B-PP
 ! O
@@ -859,12 +859,12 @@ headphones B-PRT
 believe B-VP
 it B-NP
 or O
-not O
-" O
---- B-ADJP
-except I-ADJP
-majestic B-VP
-and O
+not B-VP
+" B-NP
+--- B-PRT
+except B-ADVP
+majestic I-ADVP
+and I-ADVP
 me B-NP
 when B-ADVP
 we B-NP
@@ -889,14 +889,14 @@ p.m. I-NP
 Anyone B-PP
 know B-VP
 where B-ADVP
-to B-ADVP
-get O
-cheap B-ADJP
-brooms B-ADJP
+to B-VP
+get I-VP
+cheap B-PRT
+brooms B-NP
 ? O
-#Ryerson B-ADJP
-@RUQuidditch I-ADJP
-#Rams B-NP
+#Ryerson B-PRT
+@RUQuidditch B-ADVP
+#Rams I-ADVP
 
 @yoopergirl89 B-ADVP
 Yeah B-INTJ
@@ -955,9 +955,9 @@ This B-NP
 Week I-NP
 : O
 The B-NP
-Drama B-VP
-Edition I-VP
-http://dlvr.it/5RfHy B-VP
+Drama B-PRT
+Edition B-ADVP
+http://dlvr.it/5RfHy I-ADVP
 
 I B-NP
 just B-ADVP
@@ -1077,15 +1077,15 @@ WTF B-INTJ
 
 Class B-ADJP
 , O
-intelligence B-ADJP
+intelligence B-SBAR
 , O
-honesty B-SBAR
+honesty B-INTJ
 , O
-and O
-morals B-INTJ
+and B-ADVP
+morals I-ADVP
 are B-VP
-non B-PP
-existent I-PP
+non B-ADJP
+existent I-ADJP
 these B-NP
 days I-NP
 . O
@@ -1135,9 +1135,9 @@ Fayette I-PP
 County B-NP
 : O
 " O
-Ever B-ADVP
-wonder B-SBAR
-if I-SBAR
+Ever B-ADJP
+wonder I-ADJP
+if B-SBAR
 there B-NP
 is B-VP
 life B-NP
@@ -1178,13 +1178,13 @@ at B-PP
 tonight I-NP
 http://bit.ly/hLAnXp B-PRT
 
-@joejonas B-INTJ
-@nickjonas B-PP
-@kevinjonas B-NP
-@papajonas B-SBAR
-@greggarbo I-SBAR
-@johnlloydtaylor B-NP
-Rock B-NP
+@joejonas B-ADVP
+@nickjonas I-ADVP
+@kevinjonas B-VP
+@papajonas B-ADJP
+@greggarbo I-ADJP
+@johnlloydtaylor I-ADJP
+Rock I-ADJP
 to B-PP
 SECTION I-PP
 204 I-PP
@@ -1228,7 +1228,7 @@ of I-NP
 there B-ADVP
 within B-PP
 the B-NP
-next B-NP
+next I-NP
 month I-NP
 . O
 
@@ -1510,11 +1510,11 @@ favourite I-ADJP
 It B-NP
 's B-VP
 starting I-VP
-to B-PP
-taste B-VP
-pretty B-ADJP
-much I-NP
+to I-VP
+taste B-ADVP
+pretty I-ADVP
+much I-ADVP
 the B-NP
-same B-NP
+same I-NP
 . O
 

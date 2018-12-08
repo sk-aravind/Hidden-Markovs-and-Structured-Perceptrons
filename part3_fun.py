@@ -63,7 +63,7 @@ def Viterbi(a, b, tags, words, tweet):
     
     # function that runs each backtracking iteration
     def backtrack(j, u):
-        scores = {v: pi[(j-1, v)] * a[(v, u)] for v in tags}
+        scores = {v: pi[(j-1, v)] * a[(v, u)] for v in tags} # scores for word j
         best_tag = max(scores, key=lambda key: scores[key]) \
                     if max(scores.values()) > 0 else 'O' # tag with the highest score
         return best_tag

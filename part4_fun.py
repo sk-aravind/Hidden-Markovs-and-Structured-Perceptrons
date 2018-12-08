@@ -34,8 +34,6 @@ def get_counts2(train): # tags2
     return count_yy
 
 
-
-
 # function that computes second order transition parameters 
     # train: processed training set of features and labels
     # YY: dictionary with tag pairs and counts
@@ -48,7 +46,7 @@ def transition_dict2 (train, YY):
         for y_i in range(2, len(tweet)):
             
             # filling up transition matrix
-            a_v0v1u[((tweet[y_i - 2][1], tweet[y_i - 1][1]), tweet[y_i][1])] += 1 / YY[(tweet[y_i-2][1], tweet[y_i - 1][1])]
+            a_v0v1u[((tweet[y_i - 2][1], tweet[y_i - 1][1]), tweet[y_i][1])] += 1/YY[(tweet[y_i-2][1], tweet[y_i - 1][1])]
 
     return a_v0v1u    
 
@@ -83,7 +81,7 @@ def Viterbi_2nd_order (a, b, tags, words, tweet):
     
     # function that runs each 2nd order backtracking iteration
     def backtrack (j, v1, u):
-        scores = {v0: pi[(j-2, v0)] * a[((v0, v1), u)] for v0 in tags}
+        scores = {v0: pi[(j-2, v0)] * a[((v0, v1), u)] for v0 in tags} # scores for word j
         best_tag = max(scores, key=lambda key: scores[key]) if max(scores.values()) > 0 else 'O' # tag with the highest score
         return best_tag 
 

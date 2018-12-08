@@ -28,9 +28,8 @@ for lang in ['EN', 'FR']:
     start = time.time()
     # ============================================ getting predictions ============================================
     predictions = []
+    
     for tweet in test:
-        # words, tags0, tags1 = list(set(i) for i in zip(*b.keys()))
-        # prediction = list(zip(tweet, Viterbi_2nd_order (a, b, tags1, words, tweet)))
         words, tags = list(set(i) for i in zip(*b.keys()))
         prediction = list(zip(tweet, Viterbi_2nd_order (a, b, tags, words, tweet)))
         predictions.append(prediction)

@@ -6,8 +6,8 @@ from preprocess import *
 def get_count_y(train):
     count_y = defaultdict(int)
     for line in train:
-        for obs_label in line:
-            count_y[obs_label[1]] += 1
+        for xy in line:
+            count_y[xy[1]] += 1
     return count_y
 
 def get_emission(train):
@@ -24,24 +24,24 @@ def get_emission(train):
 # qn 2
 
 def get_emission2(train, k):
+    
     count_y = defaultdict(int)
-    count_obs = defaultdict(int)
-    count_obs_label = defaultdict(int)
+    count_x = defaultdict(int)
+    count_xy = defaultdict(int)
     emission = defaultdict(float)
+    
     for line in train:
-        for obs_label in line:
-            count_y[obs_label[1]] += 1
-            count_obs[obs_label[0]] += 1
-            count_obs_label[obs_label] += 1
+        for xy in line:
+            count_y[xy[1]] += 1
+            count_x[xy[0]] += 1
+            count_xy[xy] += 1
 
-    for obs_label, count in count_obs_label.items():
-        if count_obs[obs_label[0]] <= k:
-            emission[('#UNK#', obs_label[1])] += count
-        else:
-            emission[obs_label] += count
+    for xy, count in count_xy.items():
+        emission[('#UNK#', xy[1])] = k / (count_y[xy[1]] + k)
+        emission[xy] += count
 
-    for obs_label, count in emission.items():
-        emission[obs_label] = count / count_y[obs_label[1]]
+    for xy, count in emission.items():
+        emission[xy] = count / (count_y[xy[1]] + k)
 
     return emission
 
