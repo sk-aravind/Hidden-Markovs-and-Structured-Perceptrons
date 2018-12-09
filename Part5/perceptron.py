@@ -224,8 +224,8 @@ if __name__ == '__main__':
 
         parser = argparse.ArgumentParser()
         parser.add_argument('-traindata', type=str, dest='dataset', help='Dataset to train', required=False, default='EN')
-        parser.add_argument('-testdata', type=str, dest='testdataset', help='Dataset to train', required=False, default='EN')
-        parser.add_argument('-output', type=str, dest='output', help='Dataset to train', required=False, default='EN')
+        parser.add_argument('-testdata', type=str, dest='testdataset', help='Dataset to test on', required=False, default='EN')
+        parser.add_argument('-output', type=str, dest='output', help='location to output validation', required=False, default='EN')
         parser.add_argument('-k', type=int, dest='k',
                             help='Smoothing variable', default=1,
                             required=False)
@@ -235,12 +235,7 @@ if __name__ == '__main__':
 
         args = parser.parse_args()
 
-        training_data_path = '../%s/train' % (args.dataset)
-        validation_data_path = '../%s/dev.in' % (args.dataset)
-        output_data_path = '../%s/dev.p5.out' % (args.dataset)
-        test_data_path = '../%s/test.in' % (args.dataset)
-        test_output_data_path = '../%s/test.p5.out' % (args.dataset)
-
+    
         model = Model(args.dataset, k=args.k)
         model.readData()
         model.replaceWord()
@@ -250,8 +245,7 @@ if __name__ == '__main__':
         model.averageWeights()
         model.predict(args.testdataset,args.output)
 
-        # For test data
-        model.predict(test_data_path, test_output_data_path)
+    
     else:
         print (' Please only use python 2 to run this script ')
 
