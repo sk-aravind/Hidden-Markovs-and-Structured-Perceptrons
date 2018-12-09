@@ -166,6 +166,10 @@ def compare_observed_to_predicted(observed, predicted):
 
     #For each Instance Index example (example = 0,1,2,3.....)
     for example in observed:
+
+        if example in discardInstance:
+            continue
+
         observed_instance = observed[example]
         predicted_instance = predicted[example]
 
@@ -191,7 +195,7 @@ def compare_observed_to_predicted(observed, predicted):
                 #Entity matched
                 if span_ne == ne:
                     correct_entity += 1
-                    
+
 
                     #Entity & Sentiment both are matched
                     if span_sent == sent:
@@ -209,7 +213,7 @@ def compare_observed_to_predicted(observed, predicted):
 
     prec = correct_sentiment/total_predicted
     rec = correct_sentiment/total_observed
-    printResult('Sentiment',correct_sentiment, prec, rec)
+    printResult('Entity Type',correct_sentiment, prec, rec)
 
 
 
@@ -218,12 +222,23 @@ def compare_observed_to_predicted(observed, predicted):
 
 if len(sys.argv) < 3:
     print ('Please make sure you have installed Python 3.4 or above!')
-    print ("Usage on Windows:  python evalResult.py gold predictions")
-    print ("Usage on Linux/Mac:  python3 evalResult.py gold predictions")
+    print ("Usage on Windows:  python evalResult.py [gold file] [prediction file]")
+    print ("Usage on Linux/Mac:  python3 evalResult.py [gold file] [prediction file]")
     sys.exit()
 
 gold = open(sys.argv[1], "r", encoding='UTF-8')
 prediction = open(sys.argv[2], "r", encoding='UTF-8')
+discardInstance = []
+
+
+if len(sys.argv) > 3 and sys.argv[3] == 'filter':
+    filterInst_file = open(sys.argv[1] + '.filter', "r", encoding='UTF-8')
+    for line in filterInst_file:
+        line = line.strip('\n')
+        line = line.strip('\r')
+        instID = int(line)
+        discardInstance.append(instID)
+
 
 #column separator
 separator = ' '

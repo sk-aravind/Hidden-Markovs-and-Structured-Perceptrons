@@ -1,1 +1,0 @@
-To run, use "python partx.py", where x is the part number you wish to run.
