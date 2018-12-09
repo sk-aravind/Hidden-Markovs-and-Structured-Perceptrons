@@ -1,6 +1,6 @@
 # Hidden Markov Models and Structured Perceptrons 
 
-PART 4:
+### PART 4:
  
 We have separated our code into 2 files, namely part4fun.py and part4.py. 
 
@@ -16,7 +16,7 @@ which will also print the results/scores. part4.py can also be run simply on the
 test.ipynb.
 
 
-PART 5 (PERCEPTRON):
+### PART 5 (PERCEPTRON):
 
 script named perceptron can be found in folder part5
 python perceptron.py -traindata ../FR/train -testdata ../FR/dev.in -output ../FR/test.p5.out -k 1 -epochs 54
@@ -29,7 +29,7 @@ python perceptron.py -traindata ../FR/train -testdata ../FR/dev.in -output ../FR
 
 The folder also contains a iPython notebook which runs the model and does parameter search
 
-PART 5 (HMM):
+### PART 5 (HMM):
 
 This is for the part 5 portions that are only modifications to the HMM model. 
 Similar to part 4, we have separated our code into 2 files, namely part5fun.py and part5.py. 
