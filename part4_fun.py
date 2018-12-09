@@ -48,7 +48,7 @@ def transition_dict2 (train, YY):
             # filling up transition matrix
             a_v0v1u[((tweet[y_i - 2][1], tweet[y_i - 1][1]), tweet[y_i][1])] += 1/YY[(tweet[y_i-2][1], tweet[y_i - 1][1])]
 
-    return a_v0v1u    
+    return a_v0v1u
 
     
     

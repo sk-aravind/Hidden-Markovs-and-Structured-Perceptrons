@@ -196,11 +196,48 @@ def train_phase_2order2 (lang, k):
     YYY = get_counts3 (train) # dictionary of tag triplets and their counts
 
     # emission and transmission parameter matrices
-    emission_dict = get_emission2 (ptrain, k) # dictionary with keys as b_xj(u) and values as emission probabilities 
-    # emission_dict = emissions_Laplace (ptrain) # Laplace smoothed emission dictionary
+    # emission_dict = get_emission2 (ptrain, k) # dictionary with keys as b_xj(u) and values as emission probabilities 
+    emission_dict = emissions_Laplace (ptrain) # Laplace smoothed emission dictionary
     trans_dict = transition_dict2a (train, Y, YY, YYY) # 2nd order transition dictionary a_((v0, v1), u)
     
     return trans_dict, emission_dict
+
+
+# function that runs tuning of hyperparameter k for F-scoring
+    # test: test data set
+    # lang: language string e.g. 'EN', 'FR', etc...
+    # outfile: name of out file e.g. '/dev.p5_ktune.out'
+    # k_min: minimum value of k
+    # k_max: maximum value of k
+    # num_k: number of k values to run over
+def k_tuning (test, lang, outfile, k_min, k_max, num_k):
+    
+    k_vals = np.linspace(k_min, k_max, num_k).tolist() 
+    F0 = [] # F score for entities
+    F1 = [] # F score for entity types
+    
+    for k in k_vals:
+        # ======================================== training ========================================
+        a, b = train_phase_2order2 (lang, k) # getting 2nd order trained model parameters
+        # ========================================================================================== 
+
+        # ============================================ getting predictions ============================================
+        predictions = []
+
+        for tweet in test:
+            words, tags = list(set(i) for i in zip(*b.keys()))
+            prediction = list(zip(tweet, Viterbi_2order2 (a, b, tags, words, tweet)))
+            predictions.append(prediction)
+
+        write_predictions(predictions, lang, outfile) # writing predictions to outfile
+        # =============================================================================================================       
+
+        pred = get_entities(open(lang+outfile, encoding='utf-8'))
+        gold = get_entities(open(lang+'/dev.out', encoding='utf-8'))    
+        F0.append(F_scores(gold, pred)[0]) # F scores for entities
+        F1.append(F_scores(gold, pred)[1]) # F scores for entity types
+        
+    return k_vals, F0, F1
 
 
 
