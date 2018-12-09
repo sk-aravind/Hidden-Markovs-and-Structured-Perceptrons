@@ -19,6 +19,7 @@ test.ipynb.
 ### PART 5 (PERCEPTRON):
 
 script named perceptron can be found in folder part5
+
 python perceptron.py -traindata ../FR/train -testdata ../FR/dev.in -output ../FR/test.p5.out -k 1 -epochs 54
 
 - traindata, location of language file to train on eg ../EN/train
