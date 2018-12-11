@@ -39,7 +39,7 @@ def get_counts2(train): # tags2
     # YY: dictionary with tag pairs and counts
 def transition_dict2 (train, YY):
     
-    a_v0v1u = defaultdict(float) # init dictionary defaultdict(lambda:1e-15) #
+    a_v0v1u = defaultdict(float) # init dictionary 
     
     # counting (v0, v1), u transitions 
     for tweet in train:

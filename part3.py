@@ -11,8 +11,10 @@ import time
 
 
 # main code block
-outfile = '/dev.p3.out'
+# outfile = '/dev.p3.out'
+outfile = '/test.p3.out'
 
+languages = ['EN', 'FR']
 # loop over languages
 for lang in languages:
 
@@ -24,7 +26,8 @@ for lang in languages:
     
     # ========================================= validation set =========================================
     # A list of list of tuples of size 1. Each list in test is a tweet. 
-    test = data_from_file(lang + '/dev.in')
+    # test = data_from_file(lang + '/dev.in')
+    test = data_from_file('test_data/' + lang + '/test.in')
     # test is a list of list. Each sublist is an array of words, 1 tweet
     test = [[word[0] for word in line] for line in test]
     # ==================================================================================================
@@ -45,7 +48,8 @@ for lang in languages:
     print ()
     
     pred = get_entities(open(lang+outfile, encoding='utf-8'))
-    gold = get_entities(open(lang+'/dev.out', encoding='utf-8'))
+    # gold = get_entities(open(lang+'/dev.out', encoding='utf-8')) # test1
+    gold = get_entities(open('TEST-out/' + lang+'/test/test.out', encoding='utf-8')) # test2
     print (lang)
     compare_result(gold, pred)
     print ()
